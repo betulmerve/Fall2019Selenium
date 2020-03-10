@@ -19,7 +19,9 @@ public class FileUploading {
         BrowserUtils.wait(2);
 
         WebElement upload=driver.findElement(By.id("file-upload"));
-        String filePath=System.getProperty("user.dir")+"/pom.xml"; //user working directory
+        //String filePath=System.getProperty("user.dir")+"/pom.xml"; //user working directory
+        String filePath="/Users/mervefaki/Desktop/download.jpeg";
+        //sag tikla option tusuna bas copy as a pathname de
         upload.sendKeys(filePath);
         BrowserUtils.wait(2);
 
