@@ -21,34 +21,29 @@ public class RegistrationForm {
 
         //enter first name
         driver.findElement(By.name("firstname")).sendKeys("Merve");
-        BrowserUtils.wait(2);
+        BrowserUtils.wait(1);
         driver.findElement(By.name("lastname")).sendKeys("Cakir");
-        BrowserUtils.wait(2);
+        BrowserUtils.wait(1);
         driver.findElement(By.name("username")).sendKeys("mervecakir");
-        BrowserUtils.wait(2);
+        BrowserUtils.wait(1);
         driver.findElement(By.name("email")).sendKeys("mcakir@gmail.com");
-        BrowserUtils.wait(2);
+        BrowserUtils.wait(1);
         driver.findElement(By.name("password")).sendKeys("12345678");
-        BrowserUtils.wait(2);
+        BrowserUtils.wait(1);
         driver.findElement(By.name("phone")).sendKeys("203-415-6632");
-        BrowserUtils.wait(2);
+        BrowserUtils.wait(1);
 
         List<WebElement> genders=driver.findElements(By.name("gender"));
         genders.get(1).click(); //to select female
 
         driver.findElement(By.name("birthday")).sendKeys("01/03/1989");
-        BrowserUtils.wait(2);
+        BrowserUtils.wait(1);
 
         driver.findElement(By.id("inlineCheckbox2")).click();
         BrowserUtils.wait(2);
 
         driver.findElement(By.id("wooden_spoon")).click();
         BrowserUtils.wait(2);
-
-
-
-
-
 
 
         driver.quit();
