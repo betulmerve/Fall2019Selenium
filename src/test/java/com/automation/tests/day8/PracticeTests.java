@@ -53,8 +53,9 @@ public class PracticeTests {
         BrowserUtils.wait(2);
         List<WebElement>checkboxes=driver.findElements(By.tagName("input"));
         checkboxes.get(0).click();
+
         BrowserUtils.wait(2);
-        Assert.assertTrue(checkboxes.get(0).isSelected(),"Checkbox#1 is not selected!");
+        Assert.assertTrue(checkboxes.get(0).isSelected(),"Checkbox#1 is not selected!   ");
     }
 
 
