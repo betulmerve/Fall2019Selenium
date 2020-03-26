@@ -12,6 +12,7 @@ public class SystemProperties {
         String pathToDownloads=System.getProperty("user.home"+"/Downloads");
         System.out.println(pathToDownloads);
         System.out.println(System.getProperty("os.arch"));
+        System.out.println(System.getProperties());
 
     }
 }
