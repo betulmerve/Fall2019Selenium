@@ -15,7 +15,7 @@ public class Driver {
 
     }
 
-    public static WebDriver getDriver(){
+    public synchronized static WebDriver getDriver(){
         //if webdriver object does not exist create it
         if (driver==null) {
             String browser=ConfigurationReader.getProperty("browser").toLowerCase();
