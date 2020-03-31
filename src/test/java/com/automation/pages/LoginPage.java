@@ -1,5 +1,6 @@
 package com.automation.pages;
 
+import com.automation.utilities.BrowserUtils;
 import com.automation.utilities.ConfigurationReader;
 import com.automation.utilities.Driver;
 import org.openqa.selenium.Keys;
@@ -40,10 +41,14 @@ public class LoginPage {
     public void login(String usernameValue, String passwordValue) {
         this.username.sendKeys(usernameValue);
         this.password.sendKeys(passwordValue, Keys.ENTER);
+        BrowserUtils.waitForPageToLoad(10);
+        BrowserUtils.wait(3);
 
     }
     public void login(){
         this.username.sendKeys(ConfigurationReader.getProperty("store_manager"));
         this.password.sendKeys(ConfigurationReader.getProperty("password"), Keys.ENTER);
+        BrowserUtils.waitForPageToLoad(10);
+        BrowserUtils.wait(3);
     }
 }

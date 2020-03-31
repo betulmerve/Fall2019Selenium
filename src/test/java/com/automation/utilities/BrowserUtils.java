@@ -22,7 +22,9 @@ public class BrowserUtils {
         List<String> textValues=new ArrayList<>();
 
         for (WebElement element:elements) {
-            textValues.add(element.getText());
+            if (!element.getText().isEmpty()) {
+                textValues.add(element.getText());
+            }
         }
 
         return textValues;
