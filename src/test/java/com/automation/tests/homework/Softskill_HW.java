@@ -51,10 +51,6 @@ public class Softskill_HW {
         BrowserUtils.wait(5);
         driver.findElement(By.xpath("//button[@class='btn btn-success action-button']")).click();
         BrowserUtils.wait(5);
-
-//        String expected="Entity saved";
-//        String actual=driver.findElement();
-//        Assert.assertEquals(actual,expected);
         Driver.closeDriver();
 
     }
