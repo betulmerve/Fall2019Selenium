@@ -5,6 +5,7 @@ import com.automation.pages.activities.CalendarEventsPage;
 import com.automation.tests.vytrack.AbstractTestBase;
 import com.automation.utilities.DateTimeUtilities;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
@@ -27,7 +28,7 @@ public class NewCalendarEventsTests extends AbstractTestBase {
     public void defaultOptionsTest(){
         loginPage.login();
         calendarEventsPage.navigateTo("Activities","Calendar Events");
-        calendarEventsPage.clickToCreateCalender();
+        calendarEventsPage.clickToCreateCalenderEvent();
         Assert.assertEquals(calendarEventsPage.getOwnerName(), calendarEventsPage.getCurrentUserName());
         String actualStartDate=calendarEventsPage.getStartDate();
         String expectedStartDate=DateTimeUtilities.getTodaysDate("MMM dd, yyyy");
@@ -47,7 +48,7 @@ public class NewCalendarEventsTests extends AbstractTestBase {
     public void timeDifferenceTest(){
         loginPage.login();
         calendarEventsPage.navigateTo("Activities","Calendar Events");
-        calendarEventsPage.clickToCreateCalender();
+        calendarEventsPage.clickToCreateCalenderEvent();
         String startTime=calendarEventsPage.getStartTime();
         String endTime=calendarEventsPage.getEndTime();
         String format="h:m a";
@@ -65,5 +66,34 @@ public class NewCalendarEventsTests extends AbstractTestBase {
         List<String> expected= Arrays.asList("TITLE", "CALENDAR", "START", "END", "RECURRENT", "RECURRENCE", "INVITATION STATUS");
 
         Assert.assertEquals(calendarEventsPage.getColumnNames(),expected);
+    }
+
+    @Test(dataProvider = "calendarEvents")
+    public void createCalendarEventTest(String title, String description){
+        LoginPage loginPage=new LoginPage();
+        CalendarEventsPage calendarEventsPage=new CalendarEventsPage();
+
+        test=report.createTest("Create calendar event for" +title);
+        loginPage.login();
+        calendarEventsPage.navigateTo("Activities","Calendar Events");
+        calendarEventsPage.clickToCreateCalenderEvent();
+        calendarEventsPage.enterCalendarEventTitle(title);
+        calendarEventsPage.enterCalendarEventDescription(description);
+        calendarEventsPage.clickOnSaveAndClose();
+
+        Assert.assertEquals(calendarEventsPage.getGeneralInfoDescription(),description);
+        Assert.assertEquals(calendarEventsPage.getGeneralInfoTitle(),title);
+
+        test.pass("Calendar event was created successfully");
+    }
+
+    @DataProvider
+    public Object[][] calendarEvents(){
+        return new Object[][]{
+                {"Daily Stand-up" , "Scrum meeting to provide updates"} ,
+                {"Sprint Review" , "Scrum meeting to provide demo"} ,
+                {"Sprint Retro" , "Scrum meeting to provide changes"}
+
+        };
     }
 }

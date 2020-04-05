@@ -32,6 +32,55 @@ public class CalendarEventsPage extends AbstractPageBase {
     @FindBy(className = "grid-header-cell__label")
     private List<WebElement> columnNames;
 
+    @FindBy(css = "[id^='oro_calendar_event_form_title-uid']")
+    private WebElement title;
+
+    @FindBy(css = "iframe[id^='oro_calendar_event_form_description-uid']")
+    private WebElement descriptionFrame;
+
+    @FindBy(id = "tinymce")
+    private WebElement descriptionTextAre;
+
+    @FindBy(css = "[class='btn-group pull-right'] >button")
+    private WebElement saveAndClose;
+
+    @FindBy(xpath = "(//div[@class='control-label'])[1]")
+    private WebElement generalInfoTitle;
+
+    @FindBy(xpath = "//label[text()='Description']//following-sibling::div//div")
+    private WebElement generalInfoDescription;
+
+    public void enterCalendarEventTitle(String titleValue){
+        BrowserUtils.waitForPageToLoad(20);
+        BrowserUtils.wait(3);
+        wait.until(ExpectedConditions.visibilityOf(title)).sendKeys(titleValue);
+        BrowserUtils.wait(3);
+    }
+
+    public void enterCalendarEventDescription(String description) {
+        BrowserUtils.waitForPageToLoad(20);
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(descriptionFrame));
+        BrowserUtils.wait(3);
+        descriptionTextAre.sendKeys(description);
+        driver.switchTo().defaultContent(); //exit from the frame
+
+    }
+    public void clickOnSaveAndClose(){
+        wait.until(ExpectedConditions.elementToBeClickable(saveAndClose)).click();
+    }
+
+    public String getGeneralInfoTitle(){
+        BrowserUtils.waitForPageToLoad(20);
+        return generalInfoTitle.getText();
+    }
+
+    public String getGeneralInfoDescription(){
+        BrowserUtils.waitForPageToLoad(20);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='Description']//following-sibling::div//div")));
+        return generalInfoDescription.getText();
+    }
+
+
     public String getOwnerName(){
         BrowserUtils.waitForPageToLoad(10);
         //wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("select2-chosen")));
@@ -39,7 +88,7 @@ public class CalendarEventsPage extends AbstractPageBase {
         return owner.getText().trim();
     }
 
-    public void clickToCreateCalender(){
+    public void clickToCreateCalenderEvent(){
         BrowserUtils.waitForPageToLoad(10);
         wait.until(ExpectedConditions.elementToBeClickable(createCalendarEvent)).click();
 
