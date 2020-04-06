@@ -26,13 +26,20 @@ public class NewCalendarEventsTests extends AbstractTestBase {
 
     @Test
     public void defaultOptionsTest(){
+        test=report.createTest("Verify default login options");
+
+        LoginPage loginPage=new LoginPage();
+        CalendarEventsPage calendarEventsPage=new CalendarEventsPage();
+
         loginPage.login();
         calendarEventsPage.navigateTo("Activities","Calendar Events");
         calendarEventsPage.clickToCreateCalenderEvent();
         Assert.assertEquals(calendarEventsPage.getOwnerName(), calendarEventsPage.getCurrentUserName());
         String actualStartDate=calendarEventsPage.getStartDate();
-        String expectedStartDate=DateTimeUtilities.getTodaysDate("MMM dd, yyyy");
+        String expectedStartDate=DateTimeUtilities.getTodaysDate("MMM d, yyyy");
         Assert.assertEquals(actualStartDate,expectedStartDate);
+
+        test.pass("Default options verified");
     }
 
     /*
@@ -46,6 +53,11 @@ public class NewCalendarEventsTests extends AbstractTestBase {
 
     @Test
     public void timeDifferenceTest(){
+        test=report.createTest("Verify time difference");
+
+        LoginPage loginPage=new LoginPage();
+        CalendarEventsPage calendarEventsPage=new CalendarEventsPage();
+
         loginPage.login();
         calendarEventsPage.navigateTo("Activities","Calendar Events");
         calendarEventsPage.clickToCreateCalenderEvent();
@@ -55,10 +67,17 @@ public class NewCalendarEventsTests extends AbstractTestBase {
         long actual=DateTimeUtilities.getTimeDifference(startTime,endTime,format);
         Assert.assertEquals(actual,1,"Time difference is not correct");
 
+        test.pass("Time difference verified");
+
     }
 
     @Test
     public void verifyColumnNamesTest(){
+
+        test=report.createTest("Verify column names");
+
+        LoginPage loginPage=new LoginPage();
+        CalendarEventsPage calendarEventsPage=new CalendarEventsPage();
 
         loginPage.login();
         calendarEventsPage.navigateTo("Activities","Calendar Events");
@@ -66,10 +85,15 @@ public class NewCalendarEventsTests extends AbstractTestBase {
         List<String> expected= Arrays.asList("TITLE", "CALENDAR", "START", "END", "RECURRENT", "RECURRENCE", "INVITATION STATUS");
 
         Assert.assertEquals(calendarEventsPage.getColumnNames(),expected);
+        test.pass("Column names verified");
     }
 
     @Test(dataProvider = "calendarEvents")
     public void createCalendarEventTest(String title, String description){
+        //if you have more one test, and 1st pass but others failing,
+        //you are getting session id is null exception
+        //because driver object was not initialized in time
+        //just create page objects inside a test
         LoginPage loginPage=new LoginPage();
         CalendarEventsPage calendarEventsPage=new CalendarEventsPage();
 
