@@ -13,7 +13,7 @@ public class NewLoginTests extends AbstractTestBase {
     /*
     Login and verify that page title is "Dashboard"
      */
-    @Test
+    @Test(groups = "smoke")
     public void verifyPageTitle(){
         //test --> ExtentTest object
         //we must add to every test at the beginning
@@ -22,6 +22,7 @@ public class NewLoginTests extends AbstractTestBase {
         LoginPage loginPage=new LoginPage();
         loginPage.login();
         test.info("Login as store manager");
+        BrowserUtils.wait(2);
         Assert.assertEquals(Driver.getDriver().getTitle(),"Dashboard");
         test.pass("Page title Dashboard was verified");
     }
