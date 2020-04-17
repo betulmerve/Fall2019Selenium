@@ -3,6 +3,7 @@ package com.automation.tests.vytrack;
 import com.automation.utilities.BrowserUtils;
 import com.automation.utilities.ConfigurationReader;
 import com.automation.utilities.Driver;
+import com.automation.utilities.ExcelUtil;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
@@ -20,10 +21,13 @@ public abstract class AbstractTestBase {
     protected ExtentHtmlReporter htmlReporter;
     protected ExtentTest test;
 
+    protected static int row=1;
+    protected ExcelUtil excelUtil;
+
+
     @BeforeTest
     @Parameters("reportName")
     public void setupTest(@Optional String reportName){
-        System.out.println("Report: "+reportName);
         report = new ExtentReports();
         reportName= reportName==null ? "report.html" : reportName+".html";
         String reportPath = "";
@@ -33,6 +37,7 @@ public abstract class AbstractTestBase {
         } else {
             reportPath = System.getProperty("user.dir") + "/test-output/"+reportName;
         }
+        System.out.println("Report: "+reportName);
         //is a HTML report itself
         htmlReporter = new ExtentHtmlReporter(reportPath);
         //add it to the reporter
@@ -64,6 +69,11 @@ public abstract class AbstractTestBase {
             BrowserUtils.wait(2);
             test.addScreenCaptureFromPath(screenshotPath,"Failed"); //attach screenshot
             test.fail(iTestResult.getThrowable()); //attach console output
+            //if excelUtil object was created
+            //set value if result column to failed
+            if (excelUtil!=null){
+                excelUtil.setCellData("FAILED","result",row++);
+            }
         }
         BrowserUtils.wait(1);
         Driver.closeDriver();

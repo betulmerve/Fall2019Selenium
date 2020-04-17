@@ -32,6 +32,7 @@ public class SelectByText {
         selectDay.selectByVisibleText("3");
 
 
+
         //select all months one by one
         List<WebElement> months=selectMonth.getOptions();
 

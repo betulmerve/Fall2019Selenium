@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 
 public class NewLoginTests extends AbstractTestBase {
 
+
     /*
     Login and verify that page title is "Dashboard"
      */
@@ -75,14 +76,15 @@ public class NewLoginTests extends AbstractTestBase {
             LoginPage loginPage=new LoginPage();
             loginPage.login(username,password);
             test.info("Login as"+ username);
-            test.pass("Succesfully logged in as "+username);
             test.info(String.format("First name: %s, Last name: %s , Username: %s ",firstname,lastname,username));
+            test.pass("Succesfully logged in as "+username);
         } else {
             test.skip("Test was skipped for user: "+ username);
             throw new SkipException("Test was skipped");
         }
 
     }
+
 
     @DataProvider
     public Object[][] credentialsFromExcel(){
